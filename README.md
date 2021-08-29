@@ -1,4 +1,4 @@
-# Vtex CMS Template Parse
+# Vtex CMS Template Transpiler
 
 _coming soon_
 
