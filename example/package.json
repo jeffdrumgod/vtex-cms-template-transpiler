@@ -1,0 +1,37 @@
+{
+  "vtex": {
+    "store": "storeid",
+    "escapedName": "Store Example",
+    "scopeId": "fe418b2e-7bf0-4418-bc06-f421e9758474",
+    "acronym": "acr",
+    "environment": "myvtex.com",
+    "protocol": "https",
+    "secureUrl": true,
+    "CultureCode": "pt-BR",
+    "ISOCurrencySymbol": "BRL",
+    "paths": [
+      {
+        "type": "assets",
+        "route": "/arquivos",
+        "folder": "./arquivos"
+      },
+      {
+        "type": "templates",
+        "route": "/htmlTemplates",
+        "folder": "./src/templates"
+      },
+      {
+        "type": "subtemplates",
+        "folder": "./src/subtemplates"
+      },
+      {
+        "type": "customElements",
+        "folder": "./src/customElements"
+      },
+      {
+        "type": "shelves",
+        "folder": "./src/shelves"
+      }
+    ]
+  }
+}

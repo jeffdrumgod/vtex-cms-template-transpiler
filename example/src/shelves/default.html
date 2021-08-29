@@ -1,0 +1,55 @@
+#set($id = $product.Id)
+#set($uri = $product.Uri)
+#set($escapedName = $product.HtmlEscapedName)
+#set($idSku = $product.productVariantId)
+#set($name = $product.HtmlEscapedName)
+#set($descricaoMedia = $product.DescriptionShort)
+#if ($product.IsInStock) #set($availableStr = "available") #else
+#set($availableStr = "unavailable") #end
+<div
+class="lgn-shelf-product card"
+data-track-shelf="item"
+data-track-shelf-name="$name"
+data-track-shelf-pid="$id"
+data-track-shelf-sid="$idSku"
+data-track-shelf-price="$product.BestPrice"
+data-track-shelf-departament="$product.DepartmentName"
+data-track-shelf-brand="$product.BrandName"
+data-track-shelf-category="$product.CategoryName"
+data-track-shelf-inStock="$availableStr"
+data-track-shelf-url="$uri"
+data-idproduto="$id">
+  <!-- <span class="wishlist-button" data-skuid="$idSku"></span> -->
+  <a class="productImage" title="$escapedName" href="$uri">
+    <noscript>
+      $product.GetImageTag(30)
+      $product.GetImageTag(30, "3")
+    </noscript>
+  </a>
+  <div class="product-HightLight">
+    $product.HightLight
+  </div>
+  <div class="data">
+    <p class="name"><a title="$escapedName" href="$uri">$product.Name</a></p>
+    #if ($product.IsInStock)
+    <p class="price">
+      <a title="$escapedName" href="$uri">
+        <span class="oldPrice">
+          #if ($product.HasBestPrice)
+            <span>De: </span>$product.ListPrice
+          #end
+        </span>
+        <span class="newPrice"><span>Por: </span><em>$product.BestPrice</em></span>
+        <em class="installment">
+          #if ($product.NumbersOfInstallment > 1) ou ${product.NumbersOfInstallment}x de
+          $product.InstallmentValue sem juros #end
+        </em>
+      </a>
+    </p>
+    #else
+    <p class="outOfStock">Produto Esgotado</p>
+    #end
+  </div>
+  $product.BrandName
+  $product.Brand
+</div>

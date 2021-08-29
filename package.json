@@ -1,0 +1,37 @@
+{
+  "name": "vtex-cms-template-parser",
+  "version": "1.0.0",
+  "description": "Template parser for Vtex CMS local development",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">= 15"
+  },
+  "keywords": [
+    "vtex",
+    "npm",
+    "proxy",
+    "server",
+    "cms"
+  ],
+  "author": "Jefferson Rafael Kozerski <jeff.drumgod@gmail.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cheerio": "^1.0.0-rc.10",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-http-proxy": "^1.6.2",
+    "glob-promise": "^4.2.0",
+    "handlebars": "^4.7.7",
+    "https": "^1.0.0",
+    "lodash": "^4.17.21",
+    "morgan": "^1.10.0",
+    "serve-index": "^1.9.1",
+    "velocityjs": "^2.0.3",
+    "vtex-cms-mocked-controllers": "^1.0.0"
+  }
+}
