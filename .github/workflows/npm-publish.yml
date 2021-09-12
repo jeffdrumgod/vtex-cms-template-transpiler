@@ -1,28 +1,28 @@
-name: NPM publish CD workflow
+# name: NPM publish CD workflow
 
-on:
-  release:
-    types: [published]
+# on:
+#   release:
+#     types: [published]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.release.target_commitish }}
-      - name: Use Node.js 15
-        uses: actions/setup-node@v1
-        with:
-          node-version: 15
-      - run: git config --global user.name "GitHub CD bot"
-      - run: git config --global user.email "jeff.drumgod@gmail.com"
-      - run: npm version ${{ github.event.release.tag_name }}
-      - run: npm config set '//registry.npmjs.org/:_authToken' "${{ secrets.NPM_AUTH_TOKEN }}"
-      - run: npm publish --tag ${{ github.event.release.target_commitish }}
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-      - run: git push
-        env:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           ref: ${{ github.event.release.target_commitish }}
+#       - name: Use Node.js 15
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: 15
+#       - run: git config --global user.name "GitHub CD bot"
+#       - run: git config --global user.email "jeff.drumgod@gmail.com"
+#       - run: npm version ${{ github.event.release.tag_name }}
+#       - run: npm config set '//registry.npmjs.org/:_authToken' "${{ secrets.NPM_AUTH_TOKEN }}"
+#       - run: npm publish --tag ${{ github.event.release.target_commitish }}
+#         env:
+#           NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+#       - run: git push
+#         env:
+#           github-token: ${{ secrets.GITHUB_TOKEN }}
