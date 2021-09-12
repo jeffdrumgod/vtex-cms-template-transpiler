@@ -83,12 +83,13 @@ const renderControllerObj = async ({ vtex, obj }) => {
         if (shelfTemplateFile) {
           const templateDataUri = resolve(shelfTemplateDirectory?.folder, `${obj.shelfTemplateName}.data.js`);
           const templateData = (await checkFileExists(templateDataUri)) ? require(templateDataUri) : [];
+          const templateDataItem = Array.isArray(templateData)
+            ? templateData[Math.floor(Math.random() * templateData.length)]
+            : templateData;
           const shelfTemplateContent = renderShelf({
             vtex,
             html: await loadHtmlFromFileURL(resolve(shelfTemplateDirectory?.folder, `${obj.shelfTemplateName}.html`)),
-            obj: Array.isArray(templateData)
-              ? templateData[Math.floor(Math.random() * templateData.length)]
-              : templateData,
+            obj: templateDataItem,
           });
 
           // TODO: fazer o agrupamento de tags com base no número de colunes e itens
@@ -96,12 +97,13 @@ const renderControllerObj = async ({ vtex, obj }) => {
             .fill()
             .map((index) => {
               // TODO: mapear onde vamos salvar o ID da prateleira
-              return `<li layout="ID" class="categoriaX|categoriaY">${shelfTemplateContent}</li>`;
+              return `<li layout="${templateDataItem.id}" class="categoriaX|categoriaY">${shelfTemplateContent}</li>`;
             })
             .join('');
 
           return template({
             ...obj?.props,
+            className: templateDataItem?.className,
             shelfItems,
           });
         }
