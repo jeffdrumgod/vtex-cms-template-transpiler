@@ -16,6 +16,11 @@
         "folder": "./arquivos"
       },
       {
+        "type": "assets",
+        "route": "/files",
+        "folder": "./files"
+      },
+      {
         "type": "templates",
         "route": "/htmlTemplates",
         "folder": "./src/templates"
