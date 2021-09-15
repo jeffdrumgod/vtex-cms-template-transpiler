@@ -82,10 +82,12 @@ const renderControllerObj = async ({ vtex, obj }) => {
 
         if (shelfTemplateFile) {
           const templateDataUri = resolve(shelfTemplateDirectory?.folder, `${obj.shelfTemplateName}.data.js`);
-          const templateData = (await checkFileExists(templateDataUri)) ? require(templateDataUri) : [];
-          const templateDataItem = Array.isArray(templateData)
-            ? templateData[Math.floor(Math.random() * templateData.length)]
-            : templateData;
+          const templateData = (await checkFileExists(templateDataUri)) ? require(templateDataUri) : {};
+
+          const templateDataItem = Array.isArray(templateData.product)
+            ? templateData.product[Math.floor(Math.random() * templateData.product.length)]
+            : templateData.product;
+
           const shelfTemplateContent = renderShelf({
             vtex,
             html: await loadHtmlFromFileURL(resolve(shelfTemplateDirectory?.folder, `${obj.shelfTemplateName}.html`)),
@@ -96,26 +98,58 @@ const renderControllerObj = async ({ vtex, obj }) => {
           const shelfItems = new Array(obj?.props?.items)
             .fill()
             .map((index) => {
-              // TODO: mapear onde vamos salvar o ID da prateleira
-              return `<li layout="${templateDataItem.id}" class="categoriaX|categoriaY">${shelfTemplateContent}</li>`;
+              return `<li layout="${templateData.id}" class="categoriaX|categoriaY">${shelfTemplateContent}</li>`;
             })
             .join('');
 
           return template({
             ...obj?.props,
-            className: templateDataItem?.className,
+            className: templateData?.className,
             shelfItems,
           });
         }
       }
 
       return template(obj?.props);
+
+    case 'searchResult':
+      template = Handlebars.compile(`<div class="{{className}} n{{cols}}colunas"><ul>{{{shelfItems}}}</ul></div>`);
+      const tagData = await getShelfByTemplateId({ vtex, templateId: obj.shelfTemplateId });
+
+      if (tagData) {
+        const templateDataItem = Array.isArray(tagData.product)
+          ? tagData.product[Math.floor(Math.random() * tagData.product.length)]
+          : tagData.product;
+
+        const shelfTemplateContent = renderShelf({
+          vtex,
+          html: tagData.html,
+          obj: templateDataItem,
+        });
+
+        // TODO: fazer o agrupamento de tags com base no número de colunes e itens
+        const shelfItems = new Array(+obj?.props?.itemcount)
+          .fill()
+          .map((index) => {
+            return `<li layout="${tagData.id}" class="categoriaX|categoriaY">${shelfTemplateContent}</li>`;
+          })
+          .join('');
+
+        return {
+          html: template({
+            className: tagData?.className,
+            shelfItems,
+          }),
+          className: tagData?.className,
+        };
+      }
+      return `<!-- prateleira com identificador ${obj.shelfTemplateId} não encontrado -->`;
     default:
       return '<!-- Objeto não reconhecido -->';
   }
 };
 
-const renderShelf = ({ vtex, html, obj }) => {
+const renderShelf = ({ vtex, html, obj = {} }) => {
   const Engine = require('velocityjs');
   const keysToKebabCaseFormat = {
     BrandName: 'Brand',
@@ -146,11 +180,49 @@ const renderShelf = ({ vtex, html, obj }) => {
     });
     return product;
   };
-  const product = formatToMoney(formatKebabCase(obj?.product));
+
   return Engine.render(html, {
-    ...obj,
-    product,
+    product: formatToMoney(formatKebabCase(obj)),
   });
+};
+
+const getShelfByTemplateId = async ({ vtex, templateId }) => {
+  const shelfTemplateDirectory = vtex.paths.find((item) => item.type === 'shelves');
+  if (shelfTemplateDirectory?.folder) {
+    const files = await glob(`${shelfTemplateDirectory?.folder}/*.data.js`);
+
+    let shelfTemplateFile = false;
+    try {
+      shelfTemplateFile = await Promise.any(
+        files.map((item) => {
+          return new Promise(async (res, rej) => {
+            const templateDataUri = resolve(shelfTemplateDirectory?.folder, path.parse(item).base);
+            const templateHtmlUri = resolve(
+              shelfTemplateDirectory?.folder,
+              path.parse(item).base.replace('.data.js', '.html'),
+            );
+            const templateData = (await checkFileExists(templateDataUri)) ? require(templateDataUri) : [];
+            if (templateData.id === templateId) {
+              const data = {
+                ...templateData,
+                html: (await checkFileExists(templateHtmlUri)) ? await loadHtmlFromFileURL(templateHtmlUri) : '',
+              };
+              return res(data);
+            }
+
+            rej();
+          });
+        }),
+      );
+    } catch (e) {}
+
+    if (shelfTemplateFile) {
+      return shelfTemplateFile;
+    } else {
+      console.log(`\n\nNenhuma prateleira encontrada para o identificado ${templateId}\n\n`);
+    }
+  }
+  return false;
 };
 
 /**
@@ -175,7 +247,7 @@ const getController = async ({ vtex, $document, tag }) => {
     // se o arquivo json existir, então obter ele e os complementares para aplicar
     else if (await checkFileExists(customElementJson)) {
       const obj = await loadHtmlFromFileURL(customElementJson);
-      html = renderControllerObj({ obj, vtex });
+      html = await renderControllerObj({ obj, vtex });
     }
     // se a pasta existir, ler os arquivos .html da pasta e incluir eles diretamente
     else if (await checkFileExists(customElementFolder)) {
@@ -194,6 +266,20 @@ const getController = async ({ vtex, $document, tag }) => {
     // verifica em controles padrões da plataforma
     else if (ListVtexControllers.includes(tagname)) {
       const vtexController = VtexCmsMockedControllers.getController(tagname);
+
+      // tratamento especifico para controle de listagem de produtos
+      if (tagname === 'searchResult' && !!tag?.attrs?.layout) {
+        const options = {
+          vtex,
+          obj: {
+            type: 'searchResult',
+            shelfTemplateId: tag?.attrs?.layout,
+            props: tag?.attrs,
+          },
+        };
+        tag.products = await renderControllerObj(options);
+      }
+
       html = vtexController?.render ? vtexController.render({ vtex, $document, tag }) : vtexController.rendered;
     } else {
       html = `<!-- controle não encontrado: ${tagname} -->`;

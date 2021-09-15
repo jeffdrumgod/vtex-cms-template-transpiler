@@ -1,8 +1,8 @@
 // https://help.vtex.com/pt/tutorial/controles-do-template-de-prateleira--tutorials_550
-module.exports = [
-  {
-    id: '19ccd66b-b568-43cb-a106-b52f9796f5cd',
-    product: {
+module.exports = {
+  id: '19ccd66b-b568-43cb-a106-b52f9796f5cd',
+  product: [
+    {
       id: '1',
       Uri: '#',
       Name: 'Product 1',
@@ -56,5 +56,5 @@ module.exports = [
         // }
       },
     },
-  },
-];
+  ],
+};
