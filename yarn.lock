@@ -33,7 +33,7 @@ array-flatten@1.1.1:
   resolved "https://registry.yarnpkg.com/array-flatten/-/array-flatten-1.1.1.tgz#9a5f699051b1e7073328f2a008968b64ea2955d2"
   integrity sha1-ml9pkFGx5wczKPKgCJaLZOopVdI=
 
-axios@^0.21.1:
+axios@^0.21.2:
   version "0.21.4"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
@@ -745,10 +745,10 @@ velocityjs@^2.0.3:
   resolved "https://registry.yarnpkg.com/velocityjs/-/velocityjs-2.0.3.tgz#cc772f687061997127b7d8a827dbef3af8a0bbe6"
   integrity sha512-sUkygY7HwvbKZvS3naiI7t2o4RTqui6efSwTXLb03igdvPKm3SwCpnqA2kU4/jLD2f0eHB9xPoiza9XAkpuU+g==
 
-vtex-cms-mocked-controllers@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/vtex-cms-mocked-controllers/-/vtex-cms-mocked-controllers-1.0.1.tgz#06d118ad6960e12b79575249fd597706cb94b30c"
-  integrity sha512-2J6MgVnaXZo1EmCPKAIj19hmu+vfy9agl1KRm591xcldU1p2OqGs98BDpyhBg4Dl8t8Gb0cFzmzl3VKj+uTJ2w==
+vtex-cms-mocked-controllers@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/vtex-cms-mocked-controllers/-/vtex-cms-mocked-controllers-1.1.0.tgz#dc9c669f4fe587bf53860d11eae2d1f267443543"
+  integrity sha512-nWY1fs8PptXFRGa3snWus3z0Wck4Zu43d5oMrqwAB+kwR6pbwFJDW/Wc5yyPyGwUvjhlti/ZT/OnPZsWvU+IBw==
   dependencies:
     glob "^7.1.7"
     glob-promise "^4.2.0"

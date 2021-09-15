@@ -36,6 +36,6 @@
     "morgan": "^1.10.0",
     "serve-index": "^1.9.1",
     "velocityjs": "^2.0.3",
-    "vtex-cms-mocked-controllers": "1.0.1"
+    "vtex-cms-mocked-controllers": "1.1.0"
   }
 }
