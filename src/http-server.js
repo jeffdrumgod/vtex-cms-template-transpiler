@@ -49,7 +49,7 @@ const HttpServer = async (options = {}) => {
   );
 
   const STORE_URL = `https://${vtex.store}.vtexcommercestable.com.br/`;
-  const STORE_LOCAL_URL = `https://${host}:${port}/`;
+  const STORE_LOCAL_URL = `https://${host}${['443', '80'].includes(`${port}`) ? '' : `:${port}`}/`;
   const STORE_URL_STATICS = `https://${vtex.store}.vteximg.com.br`;
 
   const configProxy = {
@@ -81,7 +81,6 @@ const HttpServer = async (options = {}) => {
         new RegExp(STORE_LOCAL_URL, 'g'),
         STORE_URL,
       );
-
       return bodyContent;
     },
     async userResDecorator(proxyRes, proxyResData, userReq, userRes) {
