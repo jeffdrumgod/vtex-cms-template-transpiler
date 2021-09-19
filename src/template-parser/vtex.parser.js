@@ -1,5 +1,6 @@
 const { HTMLParse } = require('../helpers/html.parser');
 const methodsReplace = require('./vtex.methodsReplace');
+const { pageTypes } = require('../helpers/common');
 const { fixValidTags } = methodsReplace;
 const { injectScripts } = require('./vtex.inject');
 const _ = require('lodash');
@@ -13,7 +14,7 @@ const hasVtexTags = (html = '') => {
   const $doc = fixValidTags(html);
   const $document = HTMLParse($doc);
 
-  return !!$document.hasTag('script[type="vtex"]');
+  return !!$document.hasTag('div[type="vtex"]');
 };
 
 /**
@@ -25,7 +26,7 @@ const hasVtexTags = (html = '') => {
  * _resolve({ **$document**, **tags** })_
  */
 const parseVtexTags = async ($document) => {
-  const tag = 'script[type="vtex"]';
+  const tag = 'div[type="vtex"]';
   const $vtexTags = $document.querySelector(tag);
   const tags = [];
 
