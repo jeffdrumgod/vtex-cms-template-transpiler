@@ -164,6 +164,15 @@ const reverseReplacedTags = (html) =>
   );
 
 const parseVtexHTMLTemplate = async function ({ fileUrl, folderUrl, file_name, vtex, html }) {
+  const $mainDoc = HTMLParse(html);
+  const $body = $mainDoc.querySelector('body');
+  const pageType = $body.attr('data-page-type');
+
+  if (!pageType || !pageTypes.includes(pageType)) {
+    return `<p>Essa página não possui uma tag body com atributo "data-page-type" válido. Para que o gerador funcione corretamente você deve atribuir um tipo de página válido:</p>
+      <ul>${pageTypes.map((item) => `<li>${item}</li>`).join('')}</ul>`;
+  }
+
   // alteração de tags recursivamente
   html = await recursiveReplaceTags({
     fileUrl,
