@@ -14,7 +14,7 @@ const hasVtexTags = (html = '') => {
   const $doc = fixValidTags(html);
   const $document = HTMLParse($doc);
 
-  return !!$document.hasTag('div[type="vtex"]');
+  return !!$document.hasTag('script[type="vtex"]');
 };
 
 /**
@@ -26,7 +26,7 @@ const hasVtexTags = (html = '') => {
  * _resolve({ **$document**, **tags** })_
  */
 const parseVtexTags = async ($document) => {
-  const tag = 'div[type="vtex"]';
+  const tag = 'script[type="vtex"]';
   const $vtexTags = $document.querySelector(tag);
   const tags = [];
 

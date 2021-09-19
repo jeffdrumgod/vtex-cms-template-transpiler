@@ -17,7 +17,7 @@ VtexCmsMockedControllers.getListControlers().then((controllers) => {
 const fixValidTags = (html) => {
   return (html || '')
     .replace(/\<vtex.*\:([a-zA-Z]*)/g, '<vtex tagname="$1" ')
-    .replace(/\<vtex(.*)\/\>/g, '<div type="vtex" $1></div>')
+    .replace(/\<vtex(.*)\/\>/g, '<script type="vtex" $1></script>')
     .replace(
       /<noscript data-ignore-in-generator="true">([^\0]*?)<\/noscript>/gm,
       '<parsegenerator data-ignore-in-generator="true">$1</parsegenerator>',
