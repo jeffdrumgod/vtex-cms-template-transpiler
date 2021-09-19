@@ -48,7 +48,7 @@ const HttpServer = async (options = {}) => {
     }),
   );
 
-  const STORE_URL = `https://${vtex.store}.vtexcommercestable.com.br/`;
+  const STORE_URL = `https://${vtex.store}.${vtex.environment}/`;
   const STORE_LOCAL_URL = `https://${host}${['443', '80'].includes(`${port}`) ? '' : `:${port}`}/`;
   const STORE_URL_STATICS = `https://${vtex.store}.vteximg.com.br`;
 
@@ -59,7 +59,13 @@ const HttpServer = async (options = {}) => {
       proxyReqOpts.headers.referer = STORE_URL;
       proxyReqOpts.headers.origin = STORE_URL;
       proxyReqOpts.headers.host = STORE_URL.replace('https://', '').replace('/', '');
-
+      if (httpDebug) {
+        console.log(
+          `${proxyReqOpts.method} ${proxyReqOpts.path} => ${proxyReqOpts.host}${
+            proxyReqOpts.path
+          } | params: ${JSON.stringify(proxyReqOpts.params)}`,
+        );
+      }
       return proxyReqOpts;
     },
 
