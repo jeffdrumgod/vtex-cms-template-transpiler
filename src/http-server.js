@@ -17,7 +17,7 @@ const certKey = fs.readFileSync(path.join(__dirname, 'certs', 'selfsigned.key'))
 const certCrt = fs.readFileSync(path.join(__dirname, 'certs', 'selfsigned.crt'));
 
 const HttpServer = async (options = {}) => {
-  const { vtex, httpDebug } = options;
+  const { vtex, httpDebug, replaces } = options;
   let { storeId, store, paths } = vtex;
 
   storeId = storeId || store;
@@ -110,6 +110,7 @@ const HttpServer = async (options = {}) => {
           route.handler.bind(route, {
             templateDirectory: item.folder,
             vtex,
+            replaces,
           }),
         );
       }

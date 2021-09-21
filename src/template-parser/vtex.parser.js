@@ -104,39 +104,21 @@ const vtexReplaceTags = async ({ fileUrl, folderUrl, file_name, html, vtex }) =>
   return $document ? $document.html() : '';
 };
 
-const recursiveReplaceTags = async ({ fileUrl, folderUrl, file_name, html, vtex }, depth = 0) => {
+const recursiveReplaceTags = async ({ fileUrl, folderUrl, file_name, html, vtex, replaces }, depth = 0) => {
   depth = depth + 1;
   if (depth > 4) {
     return html;
+  }
+
+  if (replaces?.beforeEachRecursiveReplaceTags && typeof replaces?.beforeEachRecursiveReplaceTags === 'function') {
+    html = replaces.beforeEachRecursiveReplaceTags({ html });
   }
 
   html = fixValidTags(html);
 
   if (hasVtexTags(html)) {
     html = await vtexReplaceTags({ fileUrl, folderUrl, file_name, html, vtex });
-    return await recursiveReplaceTags({ fileUrl, folderUrl, file_name, html, vtex }, depth);
-  }
-
-  return html;
-};
-
-const replaceSimpleContents = async ({ project, html, DB }) => {
-  const replaces = await DB.select().from('replaces').where({ project_id: project.id, active: 1 }).all();
-
-  if (replaces.rows.length) {
-    for (const replace of replaces.rows) {
-      const reg = new RegExp(replace.replace_from, replace.replace_flags || 'g');
-      html = html.replace(reg, replace.replace_to);
-    }
-  }
-
-  const replacesProject = await DB.select().from('vtex_replaces').where({ active: 1 }).all();
-
-  if (replacesProject.rows.length) {
-    for (const replace of replacesProject.rows) {
-      const reg = new RegExp(replace.replace_from, replace.replace_flags || 'g');
-      html = html.replace(reg, replace.replace_to);
-    }
+    return await recursiveReplaceTags({ fileUrl, folderUrl, file_name, html, vtex, replaces }, depth);
   }
 
   return html;
@@ -164,7 +146,7 @@ const reverseReplacedTags = (html) =>
     '<noscript data-ignore-in-generator="true">$1</noscript>',
   );
 
-const parseVtexHTMLTemplate = async function ({ fileUrl, folderUrl, file_name, vtex, html }) {
+const parseVtexHTMLTemplate = async function ({ fileUrl, folderUrl, file_name, vtex, html, replaces }) {
   const $mainDoc = HTMLParse(html);
   const $body = $mainDoc.querySelector('body');
   const pageType = $body.attr('data-page-type');
@@ -174,6 +156,10 @@ const parseVtexHTMLTemplate = async function ({ fileUrl, folderUrl, file_name, v
       <ul>${pageTypes.map((item) => `<li>${item}</li>`).join('')}</ul>`;
   }
 
+  if (replaces?.startTemplateParser && typeof replaces?.startTemplateParser === 'function') {
+    html = replaces.startTemplateParser({ html });
+  }
+
   // alteração de tags recursivamente
   html = await recursiveReplaceTags({
     fileUrl,
@@ -181,6 +167,7 @@ const parseVtexHTMLTemplate = async function ({ fileUrl, folderUrl, file_name, v
     file_name,
     vtex,
     html,
+    replaces,
   });
 
   // injetar scripts padrões para tipo de página
@@ -204,11 +191,9 @@ const parseVtexHTMLTemplate = async function ({ fileUrl, folderUrl, file_name, v
   // retroceder variáveis que devem ser ignoradas
   html = reverseReplacedTags(html);
 
-  // html = await replaceSimpleContents({
-  //   DB,
-  //   html,
-  //   project,
-  // });
+  if (replaces?.endTemplateParser && typeof replaces?.endTemplateParser === 'function') {
+    html = replaces.endTemplateParser({ html });
+  }
 
   return html;
 };

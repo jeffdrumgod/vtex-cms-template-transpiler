@@ -2,7 +2,7 @@ const { resolve } = require('path');
 const { loadHtmlFromFileURL } = require('../helpers/common');
 const { parseVtexHTMLTemplate } = require('./vtex.parser');
 
-const templateParse = ({ templateDirectory, vtex }, req, res) => {
+const templateParse = ({ templateDirectory, vtex, replaces }, req, res) => {
   const { folder_name, file_name } = (req || {}).params || {};
 
   (async () => {
@@ -17,6 +17,7 @@ const templateParse = ({ templateDirectory, vtex }, req, res) => {
       file_name,
       vtex,
       html,
+      replaces,
     });
 
     res.send(formatedHtml || 'Arquivo não encontrado');
