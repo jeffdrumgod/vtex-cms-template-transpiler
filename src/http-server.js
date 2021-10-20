@@ -98,6 +98,10 @@ const HttpServer = async (options = {}) => {
       const reg2 = new RegExp(STORE_URL, 'g');
       htmlData = htmlData.replace(reg2, STORE_LOCAL_URL);
 
+      if (replaces?.onRemoteResponse) {
+        htmlData = replaces.onRemoteResponse({ html: htmlData });
+      }
+
       return htmlData;
     },
   };
