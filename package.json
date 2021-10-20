@@ -1,6 +1,6 @@
 {
   "name": "vtex-cms-template-transpiler",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Template transpiler for Vtex CMS local development",
   "main": "index.js",
   "scripts": {
