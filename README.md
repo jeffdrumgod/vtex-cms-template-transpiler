@@ -29,5 +29,6 @@ Quer ajudar no projeto, chama no [whatsapp](https://chat.whatsapp.com/IWdd0d4ffp
 - [ ] Upload automático de templates
 - [ ] Interface de gerenciamento de templates
 - [x] Possibilidade de regras de replace dinâmicas da loja
+- [ ] Melhorar documentação de exemplo
 
 
