@@ -7,7 +7,7 @@ npm install -D vtex-cms-template-transpiler
 ```
 ## Suporte
 
-No momento, enquanto o projeto está em finalização e testes o suporte está sendo feito diretamente via [grupo do Whatsapp](https://chat.whatsapp.com/IWdd0d4ffpXBbDS56DujvO)
+No momento, enquanto o projeto está em finalização e testes o suporte está sendo feito diretamente via [Whatsapp](https://api.whatsapp.com/send?phone=5511948559073)
 
 Quer ajudar no projeto, chama no [whatsapp](https://chat.whatsapp.com/IWdd0d4ffpXBbDS56DujvO) e vamos conversar.
 
@@ -32,4 +32,3 @@ Quer ajudar no projeto, chama no [whatsapp](https://chat.whatsapp.com/IWdd0d4ffp
 - [ ] Upload automático de arquivos
 - [ ] Upload automático de templates
 - [ ] Interface de gerenciamento de templates
-- [ ] Melhorar documentação de exemplo

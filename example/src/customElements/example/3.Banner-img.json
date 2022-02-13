@@ -1,0 +1,10 @@
+{
+  "type": "banner",
+  "props": {
+    "url": "#",
+    "image": "https://via.placeholder.com/200x200.png",
+    "width": "200",
+    "height": "200",
+    "name": "Banner teste"
+  }
+}

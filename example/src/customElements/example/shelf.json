@@ -1,0 +1,10 @@
+{
+  "type": "shelf",
+  "shelfTemplateName": "default",
+  "props": {
+    "name": "Prateleira de teste",
+    "className": "shelf",
+    "cols": 4,
+    "items": 4
+  }
+}
