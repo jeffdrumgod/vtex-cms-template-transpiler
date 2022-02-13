@@ -19,6 +19,7 @@ Quer ajudar no projeto, chama no [whatsapp](https://chat.whatsapp.com/IWdd0d4ffp
 - [x] Parser de prateleiras 
 - [x] Parser de controles de prateleiras 
 - [x] Auto inject de scripts base para cada tipo de página
+- [x] Possibilidade de regras de replace dinâmicas da loja
 - [ ] API fake para testes, substituindo nativo da plataforma
 - [ ] backup automático de templates
 - [ ] backup automático de subtemplates
@@ -28,6 +29,5 @@ Quer ajudar no projeto, chama no [whatsapp](https://chat.whatsapp.com/IWdd0d4ffp
 - [ ] Upload automático de arquivos
 - [ ] Upload automático de templates
 - [ ] Interface de gerenciamento de templates
-- [ ] Possibilidade de regras de replace dinâmicas da loja
 
 
