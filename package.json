@@ -1,6 +1,6 @@
 {
   "name": "vtex-cms-template-transpiler",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "Template transpiler for Vtex CMS local development",
   "main": "index.js",
   "scripts": {
@@ -29,6 +29,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-http-proxy": "^1.6.2",
+    "glob": "^7.1.6",
     "glob-promise": "4.2.1",
     "handlebars": "^4.7.7",
     "https": "^1.0.0",
