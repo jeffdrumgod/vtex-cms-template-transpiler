@@ -80,6 +80,10 @@ const HttpServer = async (options = {}) => {
         });
       }
 
+      if (replaces?.onRemoteHeaderResponse) {
+        headers = replaces.onRemoteHeaderResponse({ headers: headers });
+      }
+
       return headers;
     },
     proxyReqBodyDecorator(bodyContent, srcReq) {
