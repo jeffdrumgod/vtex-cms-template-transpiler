@@ -81,7 +81,7 @@ const HttpServer = async (options = {}) => {
       }
 
       if (replaces?.onRemoteHeaderResponse) {
-        headers = replaces.onRemoteHeaderResponse({ headers: headers });
+        headers = replaces.onRemoteHeaderResponse({ headers: headers, proxyRes });
       }
 
       return headers;
