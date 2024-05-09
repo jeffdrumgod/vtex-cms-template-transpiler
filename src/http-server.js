@@ -127,7 +127,15 @@ const HttpServer = async (options = {}) => {
     if (item.route) {
       server.use(
         item.route,
-        express.static(path.join(appDir, item.folder), { index: false }),
+        express.static(path.join(appDir, item.folder), {
+          index: false,
+          setHeaders: function (res, path) {
+            // https://help.vtex.com/pt/tutorial/como-instalar-um-service-worker--2H057iW0mQGguKAciwAuMe
+            if (path.includes('/service-worker.js')) {
+              res.set('Service-Worker-Allowed', '/');
+            }
+          },
+        }),
         serveIndex(path.join(appDir, item.folder), {
           icons: true,
         }),
