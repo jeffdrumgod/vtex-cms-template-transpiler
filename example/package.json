@@ -1,4 +1,14 @@
 {
+  "name": "example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "vtex": {
     "store": "storeid",
     "escapedName": "Store Example",
@@ -38,5 +48,8 @@
         "folder": "./src/shelves"
       }
     ]
+  },
+  "dependencies": {
+    "vtex-cms-template-transpiler": "^1.10.0"
   }
 }
