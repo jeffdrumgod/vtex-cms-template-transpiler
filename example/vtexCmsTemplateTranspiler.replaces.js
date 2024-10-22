@@ -16,12 +16,10 @@ module.exports = {
   // quanto terminar todas as manipulações de conteúdo
   endTemplateParser: function ({ html }) {
     const reg = new RegExp(`https://${vtex.store}.vteximg.com.br/arquivos/`, 'g');
-    const reg2 = new RegExp(`https://seu-domain-com-arquivos-estaticos.com.br/arquivos/`, 'g');
-    return html.replace(reg, '/arquivos/').replace(reg2, '/arquivos/');
+    return html.replace(reg, '/arquivos/');
   },
   onRemoteResponse: function ({ html }) {
     const reg = new RegExp(`https://${vtex.store}.vteximg.com.br/arquivos/`, 'g');
-    const reg2 = new RegExp(`https://seu-domain-com-arquivos-estaticos.com.br/arquivos/`, 'g');
-    return html.replace(reg, '/arquivos/').replace(reg2, '/arquivos/');
+    return html.replace(reg, '/arquivos/');
   },
 };
